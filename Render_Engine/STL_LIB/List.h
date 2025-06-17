@@ -26,6 +26,7 @@ void list_update(List* list, int index, void* data);
 void list_remove(List* list, int index);
 void list_clear(List* list);
 void list_free(List* list);
+size_t list_size(List* list);
 void list_print(List* list);
 
 #endif //LIST_H

@@ -4,9 +4,16 @@
 #include "malloc/malloc.h"
 #include "FBO.h"
 #include "../STL_LIB/timer_manager.h"
+#include "../GXF/GFX_Animation_core/GFX_Animation_core.h"
 
 void CallBackDebuger(void *arg) {
     Debuger_config *temp = (Debuger_config *)arg;
+    if (temp->DebugFBO) {
+        for (int i = 0; i < temp->DebugDevice_info->Device_FBO_bind->size; i++) {
+            printf("\033[38;2;%d;%d;%dm█", temp->DebugDevice_info->Device_FBO_bind->FBO[i].r, temp->DebugDevice_info->Device_FBO_bind->FBO[i].g, temp->DebugDevice_info->Device_FBO_bind->FBO[i].b);
+        }
+        printf("\033[0m\n");
+    }
     if (temp->DebugDevice) {
         printf("Device: %s\n", temp->DebugDevice_info->name_device);
         printf("Version Software: %s\n", temp->version);
@@ -17,8 +24,11 @@ void CallBackDebuger(void *arg) {
     if (temp->DebugRenderState);
     if (temp->DebugFullMemoryAllocd) {
         temp->memoryAllocated =
-            FBO_getAllocMem(temp->DebugDevice_info->Device_FBO_bind) + GetTimerSizeBytes_bytes();
+            FBO_getAllocMem(temp->DebugDevice_info->Device_FBO_bind) + GXFGetSizeAnimationQueue() + TimerListGetSize();
         printf("Memory Allocd Total: %ld bytes\n", temp->memoryAllocated);
+        printf("----------------------------------------------------------\n");
     }
     if (temp->DebugTimerQueue) DebugTimerQueue();
+    if (temp->DebugShowAnimationQueue) GFXAnimationDebug();
+    printf("\033[2J\033[H");
 }

@@ -24,22 +24,30 @@ int64_t GetTimeNow() {
 }
 
 void AddTimer(Timer *timer) {
-    struct timespec now;
-    clock_gettime(CLOCK_MONOTONIC, &now);
     timer->id = last_id;
     timer->time_start = GetTimeNow();
-
     list_push(Timer_Queue, timer, false);
     last_id++;
 }
 
-void RemoveTimer(uint8_t id) {
+Timer *AddTimerCopy(Timer *timer) {
+    Timer *timer_copy = (Timer*)malloc(sizeof(Timer));
+    memcpy(timer_copy, timer, sizeof(Timer));
+
+    timer_copy->id = last_id;
+    timer_copy->time_start = GetTimeNow();
+    list_push(Timer_Queue, timer_copy, false);
+    last_id++;
+    return timer_copy;
+}
+
+
+void RemoveTimer(uint16_t id) {
     Timer *ElemSearch;
     for (int i = 0; i < Timer_Queue->size; i++) {
-        ElemSearch = (Timer*)list_get(Timer_Queue, i, false);
-        if (ElemSearch->id = id) {
-            list_remove(Timer_Queue, i);
-            free(ElemSearch);
+        ElemSearch = (Timer*)list_get((List*)Timer_Queue, i, false);
+        if (ElemSearch->id == id) {
+            list_remove((List*)Timer_Queue, i);
             return;
         }
     }
@@ -51,23 +59,31 @@ void Timer_loop() {
 
     for (int i = 0; i < Timer_Queue->size; i++) {
         timer = (Timer*)list_get(Timer_Queue, i, false);
+        if (timer->running) {
+            timer->elapsed_time = (GetTimeNow() - timer->time_start) / 1000;
+        }
+
         if (timer->elapsed_time >= timer->duration_ms) {
-            if (timer->running) {
+            if (timer->callback_by_tick) {
                 timer->callback(timer->arg);
             }
-
             if (timer->inifinity) {
                 timer->elapsed_time = 0;
                 timer->time_start = GetTimeNow();
             }else {
+                if (timer->thisAnimation) {
+                    timer->delete_animation = true;
+                    continue;
+                }
                 list_remove(Timer_Queue, i);
                 i--;
                 continue;
             }
-        }
 
-        if (timer->running) {
-            timer->elapsed_time = (GetTimeNow() - timer->time_start) / 1000;
+            if (timer->running) {
+                if (!timer->thisAnimation) timer->callback(timer->arg);
+            }else continue;
+
         }
     }
 }
@@ -76,15 +92,18 @@ void DestroyTimerQueue() {
     free(Timer_Queue);
 }
 
-size_t GetTimerSizeBytes_bytes() {
-    return (Timer_Queue->size * Timer_Queue->element_size) + sizeof(List);
+uint16_t TimerGetProgress(Timer *timer, uint16_t max_progres) {
+    if (timer->duration_ms <= 0) return 0;
+    if (timer->elapsed_time >= timer->duration_ms) return max_progres;
+    return (max_progres * (timer->elapsed_time) / (timer->duration_ms));
 }
 
 void DebugTimerQueue() {
-    printf("Timer queue size: %zu bytes \n", GetTimerSizeBytes_bytes());
+    printf("Timer queue size: %zu bytes \n", list_size((List*)Timer_Queue));
     Timer *Elem;
     for (int i = 0; i < Timer_Queue->size; i++) {
         Elem = (Timer*)list_get(Timer_Queue, i, false);
+        if (Elem->thisAnimation) continue;
         printf("\tTimer id: %d / %s \n", Elem->id, Elem->name);
         printf("\t\ttime_start: %lld \n", Elem->time_start);
         printf("\t\telapsed_time: %d\n", Elem->elapsed_time);
@@ -93,6 +112,8 @@ void DebugTimerQueue() {
         printf("\t\trunning: %d \n\n", Elem->running);
 
     }
+}
 
-    printf("\033[2J\033[H");
+size_t TimerListGetSize() {
+    return list_size((List*)Timer_Queue);
 }

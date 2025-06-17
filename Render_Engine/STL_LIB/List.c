@@ -102,6 +102,11 @@ void list_free(List* list) {
     free(list);
 }
 
+size_t list_size(List* list) {
+    if (list == NULL) return sizeof(List);
+    return (list->size * list->element_size) + sizeof(List);
+}
+
 void list_print(List *list) {
     for (int i = 0; i < list->size; i++) {
         int *data = (int*)list_get(list, i, false);

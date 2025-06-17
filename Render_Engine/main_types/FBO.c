@@ -6,6 +6,9 @@
 
 void FBO_Create(FBO* fbo) {
     fbo->FBO = (RGB888*) malloc((sizeof(RGB888) * fbo->size));
+    for (int i = 0; i < fbo->size; i++) {
+        fbo->FBO[i] = (RGB888){.r = 0, .g = 0, .b = 0};
+    }
 }
 
 void FBO_Destroy(FBO* fbo) {

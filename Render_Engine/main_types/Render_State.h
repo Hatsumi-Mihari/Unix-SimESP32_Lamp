@@ -7,6 +7,7 @@
 typedef struct RenderState {
     FBO* fbo;
 
+    void* (*callback_render_device)(void*);
     uint64_t main_timer_update_usec;
     uint16_t time_render_frame;
     uint64_t drawn_frames;

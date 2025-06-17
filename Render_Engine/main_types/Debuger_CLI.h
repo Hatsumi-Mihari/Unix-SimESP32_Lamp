@@ -9,8 +9,10 @@ typedef struct Debuger_config {
     const char* version;
     bool DebugDevice;
     bool DebugRenderState;
+    bool DebugFBO;
     Device* DebugDevice_info;
     bool DebugShowTimeRender;
+    bool DebugShowAnimationQueue;
     uint16_t *time_render;
     bool DebugTimerQueue;
     bool DebugFullMemoryAllocd;

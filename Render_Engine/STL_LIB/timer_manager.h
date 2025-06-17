@@ -4,25 +4,33 @@
 #include "List.h"
 
 typedef struct Timer {
-    uint8_t id;
+    uint16_t id;
     const char* name;
-    void (*callback)(void*);
+    void (*callback)(void* arg);
     void *arg;
     uint64_t time_start;
     uint32_t elapsed_time;
     uint16_t duration_ms;
     bool inifinity;
     bool running;
+    bool callback_by_tick;
+
+    bool thisAnimation;
+    bool delete_animation;
 }Timer;
 
 void InitTimerQueue();
 int64_t GetTimeNow();
 void AddTimer(Timer *timer);
-void RemoveTimer(uint8_t id);
+Timer *AddTimerCopy(Timer *timer);
+void RemoveTimer(uint16_t id);
+Timer *GetTimerById(uint16_t id);
 void Timer_loop();
 void DestroyTimerQueue();
-size_t GetTimerSizeBytes_bytes();
+
+uint16_t TimerGetProgress(Timer *timer, uint16_t max_progress);
 
 void DebugTimerQueue();
+size_t TimerListGetSize();
 
 #endif //TIMER_MANAGER_H
