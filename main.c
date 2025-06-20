@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <unistd.h>
+
+#ifdef PLATFORM_UNIX
+#include <malloc.h>
+#include <stdlib.h>
+#endif
+
+#ifdef PLATFORM_MACOSX_ARM64
 #include <malloc/malloc.h>
+#endif
 
 #include "Render_Engine/STL_LIB/List.h"
 #include "Render_Engine/main_types/FBO.h"
@@ -101,7 +109,6 @@ int main(void) {
     });
 
 
-    //PipelineMake(render_state.fbo);
     PipelineAddAnimations(render_state.fbo, (GFX_Animation[]){
         (GFX_Animation){
         .indexRenderAnimation = 0,

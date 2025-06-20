@@ -1,7 +1,14 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.30)
 project(ESP32_Render_engine2 C)
 
 set(CMAKE_C_STANDARD 99)
+
+if(PLATFORM STREQUAL "UNIX")
+    add_definitions(-DPLATFORM_UNIX)
+elseif(PLATFORM STREQUAL "MACOSX_ARM64")
+    add_definitions(-DPLATFORM_MACOSX_ARM64)
+endif()
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -g -O1")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1")
@@ -36,5 +43,7 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/GXF/GFX_Animation_core/Animations/Rainbow.c
         Render_Engine/GXF/GFX_Animation_core/Animations/Rainbow.h
         Render_Engine/GXF/GFX_Animation_core/Animations/Animations.h
+        "Network /INet.c"
+        "Network /INet.h"
 )
 
