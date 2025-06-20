@@ -72,7 +72,7 @@ int main(void) {
             .name_device = "CLI_Debug_Test_ESP32_S2"
         },
         .DebugFBO = true,
-        .version = "PC_Unix_ALPHA:0.2.20",
+        .version = "PC_Unix_ALPHA:0.2.22",
         .DebugFullMemoryAllocd = true,
         .DebugTimerQueue = true,
         .DebugDevice = true,
