@@ -1,7 +1,13 @@
 #include "Debuger_CLI.h"
 #include "Device.h"
 #include "Render_State.h"
-#include "malloc/malloc.h"
+#ifdef __APPLE__
+#include <malloc/malloc.h>
+#define get_alloc_size(ptr) malloc_size(ptr)
+#else
+#include <malloc.h>
+#define get_alloc_size(ptr) malloc_usable_size(ptr)
+#endif
 #include "FBO.h"
 #include "../STL_LIB/timer_manager.h"
 #include "../GXF/GFX_Animation_core/GFX_Animation_core.h"
@@ -17,7 +23,7 @@ void CallBackDebuger(void *arg) {
     if (temp->DebugDevice) {
         printf("Device: %s\n", temp->DebugDevice_info->name_device);
         printf("Version Software: %s\n", temp->version);
-        printf("VRAM Alloced: %lu bytes\n", malloc_size(temp->DebugDevice_info->Device_FBO_bind->FBO));
+        printf("VRAM Alloced: %lu bytes\n", get_alloc_size(temp->DebugDevice_info->Device_FBO_bind->FBO));
         printf("Led Count: %d\n", temp->DebugDevice_info->Device_FBO_bind->size);
         printf("----------------------------------------------------------\n");
     }
