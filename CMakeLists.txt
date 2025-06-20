@@ -35,5 +35,6 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/GXF/PipeLine_rendering.h
         Render_Engine/GXF/GFX_Animation_core/Animations/Rainbow.c
         Render_Engine/GXF/GFX_Animation_core/Animations/Rainbow.h
+        Render_Engine/GXF/GFX_Animation_core/Animations/Animations.h
 )
 

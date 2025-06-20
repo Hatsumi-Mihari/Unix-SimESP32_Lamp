@@ -24,7 +24,7 @@ int64_t GetTimeNow();
 void AddTimer(Timer *timer);
 Timer *AddTimerCopy(Timer *timer);
 void RemoveTimer(uint16_t id);
-Timer *GetTimerById(uint16_t id);
+void ResetTimer(Timer *timer);
 void Timer_loop();
 void DestroyTimerQueue();
 

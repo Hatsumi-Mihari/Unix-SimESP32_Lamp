@@ -1,7 +1,3 @@
-//
-// Created by Mihari Hatsumi on 12/6/25.
-//
-
 #include "GFX_Animation_core.h"
 
 #include <stdlib.h>
@@ -71,7 +67,8 @@ void GXFAnimationRemoveByIndexGroup(int indexAnimation) {
     if (flagClearFBO != NULL) *flagClearFBO = true;
 }
 
-void GFXAnimationUpdate() {
+
+void GFXAnimationUpdateLoop() {
     GFX_Animation *elem;
     for (int i = 0; i < GFX_AnimationList->size; i++) {
         elem = (GFX_Animation*)list_get((List*)GFX_AnimationList, i, false);
@@ -88,7 +85,6 @@ void GFXAnimationUpdate() {
     }
 }
 
-
 void GFXAnimationDebug() {
     GFX_Animation *elem;
     printf("\n----------------------------------------------------------\n");
@@ -96,7 +92,8 @@ void GFXAnimationDebug() {
     for (int i = 0; i < GFX_AnimationList->size; i++) {
         elem = (GFX_Animation*)list_get((List*)GFX_AnimationList, i, false);
         printf("\t%s\n", elem->timer->name);
-        printf("\t\tIndex animation: %d\n", elem->indexRenderAnimation);
+        printf("\t\tIndex: %d\n", i);
+        printf("\t\tIndex render: %d\n", elem->indexRenderAnimation);
         printf("\t\tProgress: %d\n", elem->progress / 10);
         printf("\t\tElapsed_time: %d ms\n", elem->timer->elapsed_time);
         printf("\t\tDuration_ms: %d ms\n", elem->timer->duration_ms);
@@ -106,6 +103,31 @@ void GFXAnimationDebug() {
     elem = NULL;
 }
 
+
+void GFXAnimationSetIndexRender(int indexAnimation, int indexRender){
+    GFX_Animation *elem = (GFX_Animation*)list_get((List*)GFX_AnimationList, indexAnimation, false);
+    elem->indexRenderAnimation = indexRender;
+}
+
+void GFXAnimationSetArgCallback(void *arg, int index) {
+    GFX_Animation *elem = (GFX_Animation*)list_get((List*)GFX_AnimationList, index, false);
+    if (arg != NULL) {
+        memcpy(elem->arg, arg, elem->arg_size);
+    }
+}
+
+void GFXAnimationSetTimer(int index, Timer timer) {
+    GFX_Animation *elem = (GFX_Animation*)list_get((List*)GFX_AnimationList, index, false);
+    int id_timer = elem->timer->id;
+    memcpy(elem->timer, &timer, sizeof(Timer));
+    elem->timer->id = id_timer;
+    ResetTimer(elem->timer);
+}
+
 size_t GXFGetSizeAnimationQueue() {
     return list_size((List*)GFX_AnimationList);
+}
+
+size_t GFXGetCountAnimation() {
+    return GFX_AnimationList->size;
 }

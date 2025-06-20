@@ -53,6 +53,11 @@ void RemoveTimer(uint16_t id) {
     }
 }
 
+void ResetTimer(Timer *timer) {
+    timer->elapsed_time = 0;
+    timer->time_start = GetTimeNow();
+}
+
 void Timer_loop() {
     Timer *timer;
     if (Timer_Queue == NULL) return;

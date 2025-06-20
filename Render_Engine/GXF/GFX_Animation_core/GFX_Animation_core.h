@@ -4,7 +4,7 @@
 #include "../../STL_LIB/timer_manager.h"
 
 typedef struct GFX_Animation {
-    uint16_t indexRenderAnimation;
+    int16_t indexRenderAnimation;
     Timer *timer;
     uint16_t progress;
     void (*callback)(void* arg, uint16_t* progress);
@@ -17,10 +17,16 @@ void GXFAnimationAdd(GFX_Animation* animation);
 void GXFAnimationRemove(int indexList);
 void GFXAnimationRemoveByLinkElem(GFX_Animation *link, int index);
 void GXFAnimationRemoveByIndexGroup(int indexAnimation);
-void GFXAnimationUpdate();
+void GFXAnimationUpdateLoop();
+
+void GFXAnimationSetIndexRender(int indexAnimation, int indexRender);
+void GFXAnimationSetArgCallback(void *arg, int index);
+void GFXAnimationSetTimer(int index, Timer timer);
+
 
 void GFXAnimationDebug();
 size_t GXFGetSizeAnimationQueue();
+size_t GFXGetCountAnimation();
 
 
 #endif //GFX_ANIMATION_CORE_H
