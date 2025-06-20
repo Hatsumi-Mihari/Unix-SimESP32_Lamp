@@ -1,12 +1,11 @@
 #include "FBO.h"
 #include <stdlib.h>
-#ifdef PLATFORM_UNIX
-#include <malloc.h>
-#include <stdlib.h>
-#endif
-
-#ifdef PLATFORM_MACOSX_ARM64
+#ifdef __APPLE__
 #include <malloc/malloc.h>
+#define get_alloc_size(ptr) malloc_size(ptr)
+#else
+#include <malloc.h>
+#define get_alloc_size(ptr) malloc_usable_size(ptr)
 #endif
 
 #include "../STL_LIB/malloc_tracked.h"
@@ -28,5 +27,5 @@ void FBO_ReCreate(FBO* fbo) {
 }
 
 size_t FBO_getAllocMem(FBO* fbo) {
-    return malloc_size(fbo->FBO) + sizeof(FBO);
+    return get_alloc_size(fbo->FBO) + sizeof(FBO);
 }
