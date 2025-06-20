@@ -8,7 +8,6 @@
 #define get_alloc_size(ptr) malloc_usable_size(ptr)
 #endif
 
-#include "../STL_LIB/malloc_tracked.h"
 
 void FBO_Create(FBO* fbo) {
     fbo->FBO = (RGB888*) malloc((sizeof(RGB888) * fbo->size));

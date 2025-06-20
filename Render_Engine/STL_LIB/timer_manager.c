@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include "timer_manager.h"
-#include "malloc_tracked.h"
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>

@@ -23,8 +23,6 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/Color_Spaces/HSL.c
         Render_Engine/main_types/FBO.h
         Render_Engine/main_types/FBO.c
-        Render_Engine/STL_LIB/malloc_tracked.c
-        Render_Engine/STL_LIB/malloc_tracked.h
         Render_Engine/main_types/Render_State.h
         Render_Engine/main_types/Device.c
         Render_Engine/main_types/Device.h
