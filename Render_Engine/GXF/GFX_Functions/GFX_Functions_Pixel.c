@@ -1,5 +1,5 @@
 #include "GFX_Functions_Pixel.h"
-#include "math.h"
+#include <math.h>
 
 float GFXClamf(float x, float val_min, float val_max) {
     if (x < val_min)
