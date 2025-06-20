@@ -2,7 +2,14 @@
 #define DEVICE_H
 #include "Render_State.h"
 #include "FBO.h"
+#ifdef PLATFORM_UNIX
+#include <malloc.h>
+#include <stdlib.h>
+#endif
+
+#ifdef PLATFORM_MACOSX_ARM64
 #include <malloc/malloc.h>
+#endif
 
 
 typedef struct Device {
