@@ -1,6 +1,13 @@
 #include "FBO.h"
 #include <stdlib.h>
+#ifdef PLATFORM_UNIX
+#include <malloc.h>
+#include <stdlib.h>
+#endif
+
+#ifdef PLATFORM_MACOSX_ARM64
 #include <malloc/malloc.h>
+#endif
 
 #include "../STL_LIB/malloc_tracked.h"
 
