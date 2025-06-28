@@ -43,6 +43,8 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/GXF/GFX_Animation_core/Animations/Animations.h
         "Network/INet.c"
         "Network/INet.h"
+        Render_Engine/GXF/GFX_Animation_core/Animations/AudioEffect.c
+        Render_Engine/GXF/GFX_Animation_core/Animations/AudioEffect.h
 )
 
 target_link_libraries(ESP32_Render_engine2 m)

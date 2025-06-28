@@ -27,10 +27,11 @@ void CallBackDebuger(void *arg) {
         printf("Led Count: %d\n", temp->DebugDevice_info->Device_FBO_bind->size);
         printf("----------------------------------------------------------\n");
     }
+    if (temp->DebugNetwork) debugNetwork(temp->sockDebug);
     if (temp->DebugRenderState);
     if (temp->DebugFullMemoryAllocd) {
         temp->memoryAllocated =
-            FBO_getAllocMem(temp->DebugDevice_info->Device_FBO_bind) + GXFGetSizeAnimationQueue() + TimerListGetSize();
+            FBO_getAllocMem(temp->DebugDevice_info->Device_FBO_bind) + GXFGetSizeAnimationQueue() + TimerListGetSize() + temp->sockDebug->sizeBuffer;
         printf("Memory Allocd Total: %ld bytes\n", temp->memoryAllocated);
         printf("----------------------------------------------------------\n");
     }

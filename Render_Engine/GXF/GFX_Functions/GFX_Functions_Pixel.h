@@ -1,6 +1,7 @@
 #include "../../Color_Spaces/RGB888_Struct.h"
 #include "../../Color_Spaces/HSL.h"
 
+
 #define CONST_RED_COF_ONE 329.670f
 #define CONST_RED_COF_POW -0.133f
 #define CONST_GREEN_COF_ONE 99.470f
@@ -16,6 +17,7 @@
 float GFXClamf(float x, float val_min, float val_max);
 int GFXClam(int x, int val_min, int val_max);
 RGB888 GFXBlandPixel(RGB888 *color1, RGB888 *color2, uint8_t factor);
+
 RGB888 GFXBrightnessPixel(RGB888 *color1, uint8_t level);
 RGB888 GFXKalvinTempf(uint16_t temp);
 RGB888 GFXKalvinTemp(uint16_t temp);

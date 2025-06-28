@@ -18,6 +18,7 @@
 #include "Render_Engine/GXF/GFX_Animation_core/GFX_Animation_core.h"
 #include "Render_Engine/GXF/GFX_Animation_core/Animations/Animations.h"
 #include "Render_Engine/GXF/PipeLine_rendering.h"
+#include "Network/INet.h"
 
 #define TOTAL_DRAM_ESP32_S2 215588
 
@@ -55,7 +56,7 @@ int main(void) {
 
     RenderState render_state = {
         .fbo = &(FBO){
-            .size = 88
+            .size = 72
         },
         .main_timer_update_usec = 15,
         .enable_bland = true,
@@ -66,17 +67,25 @@ int main(void) {
     FBO_Create(render_state.fbo);
     InitTimerQueue();
 
+    InetSock UDPAudioSock = {
+        .port = 2206,
+        .sizeBuffer = 1024,
+    };
+    UDPServerMake(&UDPAudioSock);
+
     Debuger_config db_conf = {
         .DebugDevice_info = &(Device){
             .Device_FBO_bind = render_state.fbo,
             .name_device = "CLI_Debug_Test_ESP32_S2"
         },
         .DebugFBO = true,
-        .version = "PC_Unix_ALPHA:0.2.22",
+        .version = "PC_Unix_ALPHA:0.2.25",
         .DebugFullMemoryAllocd = true,
-        .DebugTimerQueue = true,
+        .DebugTimerQueue = false,
         .DebugDevice = true,
-        .DebugShowAnimationQueue = true
+        .DebugShowAnimationQueue = false,
+        .sockDebug = &UDPAudioSock,
+        .DebugNetwork = true
     };
 
     GXFAnimationInit(&render_state.clear_fbo);
@@ -89,10 +98,21 @@ int main(void) {
         .running = true,
     });
 
+
+
     AddTimer(&(Timer){
         .name = "Debug CallBack",
         .callback = &CallBackDebuger,
         .arg = &db_conf,
+        .duration_ms = 32,
+        .inifinity = true,
+        .running = true,
+    });
+
+    AddTimer(&(Timer){
+        .name = "Debug Netwotk",
+        .callback = &UDPServerListen_callback,
+        .arg = &UDPAudioSock,
         .duration_ms = 32,
         .inifinity = true,
         .running = true,
@@ -105,7 +125,7 @@ int main(void) {
         .duration_ms = 5000,
         .inifinity = false,
         .callback_by_tick = true,
-        .running = true,
+        .running = false,
     });
 
 
@@ -113,53 +133,56 @@ int main(void) {
         (GFX_Animation){
         .indexRenderAnimation = 0,
         .timer = &(Timer){
-            .name = "Test fill rainbow",
+            .name = "Test FFT test",
             .callback = NULL,
             .arg = NULL,
-            .duration_ms = 2000,
+            .duration_ms = 15000,
             .inifinity = true,
             .running = true,
         },
-        .callback = &MonotoneFiilRanbow,
-        .arg = &(Rainbow_data){
+        .callback = &drawAudioLightSpectrum,
+        .arg = &(AudioEffect){
             .fbo = render_state.fbo,
-            .color1 = (HSL){
-                .hue = 0,
-                .saturation = 255,
-                .lightness = 255,
+            .color = (RGB888){
+                .r = 0,
+                .g = 255,
+                .b = 154,
             },
-            .rangeX1 = 0,
-            .rangeX2 = render_state.fbo->size / 2,
-            .speed = 1.0f
+            .SectrumData = UDPAudioSock.bufferRX,
+            .SectrumSize = 72
         },
-        .arg_size = sizeof(Rainbow_data),
+        .arg_size = sizeof(AudioEffect),
         },
-
         (GFX_Animation){
-        .indexRenderAnimation = 0,
-        .timer = &(Timer){
-            .name = "Test fill rainbow",
-            .callback = NULL,
-            .arg = NULL,
-            .duration_ms = 2000,
-            .inifinity = true,
-            .running = true,
-        },
-        .callback = &MonotoneFiilRanbow,
-        .arg = &(Rainbow_data){
-            .fbo = render_state.fbo,
-            .color1 = (HSL){
-                .hue = 0,
-                .saturation = 255,
-                .lightness = 255,
+            .indexRenderAnimation = 0,
+            .timer = &(Timer){
+                .name = "Test fill rainbow",
+                .callback = NULL,
+                .arg = NULL,
+                .duration_ms = 2000,
+                .inifinity = true,
+                .running = true,
             },
-            .rangeX1 = render_state.fbo->size / 2,
-            .rangeX2 = render_state.fbo->size,
-            .speed = 1.0f
-        },
-        .arg_size = sizeof(Rainbow_data),
-        }
-    },2);
+            .callback = &MonotoneFiilRanbow,
+            .arg = &(Rainbow_data){
+                .fbo = render_state.fbo,
+                .color1 = (HSL){
+                    .hue = 128,
+                    .saturation = 255,
+                    .lightness = 255,
+                },
+                .rangeX1 = 0,
+                .rangeX2 = render_state.fbo->size,
+                .speed = 0.0f
+            },
+            .arg_size = sizeof(Rainbow_data),
+            },
+
+
+    },1);
+
+
+
 
 
     while (1) {

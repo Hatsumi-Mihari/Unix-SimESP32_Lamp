@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "FBO.h"
 #include "Device.h"
+#include "../../Network/INet.h"
 
 typedef struct Debuger_config {
     const char* version;
@@ -16,7 +17,10 @@ typedef struct Debuger_config {
     uint16_t *time_render;
     bool DebugTimerQueue;
     bool DebugFullMemoryAllocd;
+    InetSock *sockDebug;
+    bool DebugNetwork;
     size_t memoryAllocated;
+
 }Debuger_config;
 
 void CallBackDebuger(void *arg);
