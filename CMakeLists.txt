@@ -54,11 +54,11 @@ add_executable(ESP32_Render_engine2 main.c
 
 set(EXTRA_LIBS m)
 if(DISPLAY_OUT STREQUAL "WS281X_RPI")
-    find_library(WS2811_LIB NAMES ws2811 PATHS /usr/local/lib)
-    list(APPEND EXTRA_LIBS ${WS2811_LIB})
+    message(STATUS "WS281X_RPI backend enabled")
     list(APPEND SOURCES Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c)
     add_definitions(-DWS281X_RPI)
     include_directories(/usr/local/include)
+    list(APPEND EXTRA_LIBS /usr/local/lib/libws2811.a)  # <=== прямой путь к .a
 endif()
 
 target_link_libraries(ESP32_Render_engine2 m)
