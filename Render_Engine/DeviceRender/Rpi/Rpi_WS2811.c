@@ -27,7 +27,7 @@ void init_ws2811(int countLeds) {
     led.channel[0].gpionum = GPIO_PIN;
     led.channel[0].count = countLeds;
     led.channel[0].invert = 0;
-    led.channel[0].brightness = 255;
+    led.channel[0].brightness = 220;
     led.channel[0].strip_type = WS2811_STRIP_GRB;
 
     ret = ws2811_init(&led);
