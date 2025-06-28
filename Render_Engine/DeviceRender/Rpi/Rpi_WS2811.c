@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
-
+#ifdef WS281X_RPI
 #include <ws2811/ws2811.h>
 
 #define GPIO_PIN 18
@@ -45,5 +45,5 @@ void render(FBO *fbo) {
 
     ws2811_render(&led);
 }
-#ifdef WS281X_RPI
+
 #endif

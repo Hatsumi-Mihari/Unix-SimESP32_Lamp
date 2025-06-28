@@ -10,39 +10,7 @@ if (DISPLAY_OUT STREQUAL "WS281X_RPI")
     include_directories(/usr/local/include)
     link_directories(/usr/local/lib)
     add_compile_definitions(WS281X_RPI)
-    add_executable(ESP32_Render_engine2 main.c
-            Render_Engine/STL_LIB/List.h
-            Render_Engine/STL_LIB/List.c
-            Render_Engine/Color_Spaces/RGB888_Struct.h
-            Render_Engine/Color_Spaces/HSL.h
-            Render_Engine/Color_Spaces/HSL.c
-            Render_Engine/main_types/FBO.h
-            Render_Engine/main_types/FBO.c
-            Render_Engine/main_types/Render_State.h
-            Render_Engine/main_types/Device.c
-            Render_Engine/main_types/Device.h
-            Render_Engine/STL_LIB/timer_manager.c
-            Render_Engine/STL_LIB/timer_manager.h
-            Render_Engine/main_types/Debuger_CLI.c
-            Render_Engine/main_types/Debuger_CLI.h
-            "Render_Engine/GXF/GFX_Animation_core/GFX_Animation_core.c"
-            "Render_Engine/GXF/GFX_Animation_core/GFX_Animation_core.h"
-            Render_Engine/GXF/GFX_Functions/GFX_Functions_Pixel.c
-            Render_Engine/GXF/GFX_Functions/GFX_Functions_Pixel.h
-            Render_Engine/GXF/GFX_Functions/Shaders/ColorFill.c
-            Render_Engine/GXF/GFX_Functions/Shaders/ColorFill.h
-            Render_Engine/GXF/PipeLine_rendering.c
-            Render_Engine/GXF/PipeLine_rendering.h
-            Render_Engine/GXF/GFX_Animation_core/Animations/Rainbow.c
-            Render_Engine/GXF/GFX_Animation_core/Animations/Rainbow.h
-            Render_Engine/GXF/GFX_Animation_core/Animations/Animations.h
-            "Network/INet.c"
-            "Network/INet.h"
-            Render_Engine/GXF/GFX_Animation_core/Animations/AudioEffect.c
-            Render_Engine/GXF/GFX_Animation_core/Animations/AudioEffect.h
-            Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c
-            Render_Engine/DeviceRender/Rpi/Rpi_WS2811.h
-    )
+
 endif()
 
 if(PLATFORM STREQUAL "UNIX")
@@ -87,6 +55,8 @@ add_executable(ESP32_Render_engine2 main.c
         "Network/INet.h"
         Render_Engine/GXF/GFX_Animation_core/Animations/AudioEffect.c
         Render_Engine/GXF/GFX_Animation_core/Animations/AudioEffect.h
+        Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c
+        Render_Engine/DeviceRender/Rpi/Rpi_WS2811.h
 )
 
 target_link_libraries(ESP32_Render_engine2 m)
