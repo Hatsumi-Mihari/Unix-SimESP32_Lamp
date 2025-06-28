@@ -3,7 +3,7 @@ project(ESP32_Render_engine2 C)
 
 set(CMAKE_C_STANDARD 99)
 set(DEBUG_SOFWARE 1)
-set(DISPLAY_OUT "NULL")
+set(DISPLAY_OUT "WS281X_RPI")
 
 
 if(PLATFORM STREQUAL "UNIX")
