@@ -5,13 +5,6 @@ set(CMAKE_C_STANDARD 99)
 set(DEBUG_SOFWARE 1)
 set(DISPLAY_OUT "WS281X_RPI")
 
-if (DISPLAY_OUT STREQUAL "WS281X_RPI")
-    target_link_libraries(ESP32_Render_engine2 PRIVATE /usr/local/lib/libws2811.a)
-    include_directories(/usr/local/include)
-    link_directories(/usr/local/lib)
-    add_compile_definitions(WS281X_RPI)
-
-endif()
 
 if(PLATFORM STREQUAL "UNIX")
     add_definitions(-DPLATFORM_UNIX)
@@ -58,6 +51,14 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c
         Render_Engine/DeviceRender/Rpi/Rpi_WS2811.h
 )
+
+if (DISPLAY_OUT STREQUAL "WS281X_RPI")
+    list(APPEND SOURCES Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c)
+    add_definitions(-DWS281X_RPI)
+    include_directories(/usr/local/include)
+    link_directories(/usr/local/lib)
+    set(EXTRA_LIBS /usr/local/lib/libws2811.a)
+endif()
 
 target_link_libraries(ESP32_Render_engine2 m)
 
