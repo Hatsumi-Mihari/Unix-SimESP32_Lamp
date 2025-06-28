@@ -183,8 +183,6 @@ int main(void) {
 
 
 
-
-
     while (1) {
         Timer_loop();
         usleep(1000);
