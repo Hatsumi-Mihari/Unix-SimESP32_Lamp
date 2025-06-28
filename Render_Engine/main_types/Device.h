@@ -20,7 +20,7 @@ typedef struct Device {
     bool enable_vsync;
 }Device;
 
-void Device_Init(Device *Device);
-void Device_Destroy(Device *Device);
+void Device_Init(int countLeds);
+void Device_Render(FBO *fbo);
 
 #endif //DEVICE_H

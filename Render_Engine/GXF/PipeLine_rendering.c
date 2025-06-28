@@ -4,6 +4,7 @@
 #include "../main_types/Render_State.h"
 #include "GFX_Functions/GFX_Functions_Pixel.h"
 #include "GFX_Functions/Shaders/ColorFill.h"
+#include "../main_types/Device.h"
 
 void PipelinePostEffects(FBO *fbo) {
 
@@ -20,6 +21,7 @@ void PipelineRendering_Callback(void *arg) {
     }
     Render_State->time_render_frame = GetTimeNow() - Render_State->time_render_frame;
     if (Render_State->callback_render_device != NULL) Render_State->callback_render_device(Render_State->fbo);
+    Device_Render(Render_State->fbo);
 }
 
 

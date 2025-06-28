@@ -67,6 +67,8 @@ int main(void) {
     FBO_Create(render_state.fbo);
     InitTimerQueue();
 
+    Device_Init(render_state.fbo->size);
+
     InetSock UDPAudioSock = {
         .port = 2206,
         .sizeBuffer = 1024,
