@@ -58,9 +58,6 @@ if(DISPLAY_OUT STREQUAL "WS281X_RPI")
 
     include_directories(/usr/local/include)
     link_directories(/usr/local/lib)
-
-    add_executable(ws281x_demo main.c)
-    target_link_libraries(ws281x_demo ws2811) # <=== прямой путь к .a
 endif()
 
 target_link_libraries(ESP32_Render_engine2 m)
