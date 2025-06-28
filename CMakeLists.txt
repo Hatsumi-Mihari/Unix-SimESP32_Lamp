@@ -5,6 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 if(PLATFORM STREQUAL "UNIX")
     add_definitions(-DPLATFORM_UNIX)
+    target_link_libraries(ESP32_Render_engine2 PRIVATE /usr/local/lib/libws2811.a)
 elseif(PLATFORM STREQUAL "MACOSX_ARM64")
     add_definitions(-DPLATFORM_MACOSX_ARM64)
 endif()
