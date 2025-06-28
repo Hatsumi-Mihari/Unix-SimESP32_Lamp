@@ -3,7 +3,7 @@ project(ESP32_Render_engine2 C)
 
 set(CMAKE_C_STANDARD 99)
 set(DEBUG_SOFWARE 1)
-set(DISPLAY_OUT "NULL")
+set(DISPLAY_OUT "WS281X_RPI")
 
 if (DISPLAY_OUT STREQUAL "WS281X_RPI")
     target_link_libraries(ESP32_Render_engine2 PRIVATE /usr/local/lib/libws2811.a)
