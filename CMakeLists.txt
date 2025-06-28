@@ -18,6 +18,17 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
 endif()
 
+set(extra_libs m)
+if(DISPLAY_OUT STREQUAL "WS281X_RPI")
+
+    list(APPEND SOURCES Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c)
+
+    add_compile_definitions(WS281X_RPI)
+    include_directories(/usr/local/include)
+
+    list(APPEND extra_libs /usr/local/lib/libws2811.a)
+endif()
+
 add_executable(ESP32_Render_engine2 main.c
         Render_Engine/STL_LIB/List.h
         Render_Engine/STL_LIB/List.c
@@ -51,15 +62,6 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c
         Render_Engine/DeviceRender/Rpi/Rpi_WS2811.h
 )
-
-set(EXTRA_LIBS m)
-if(DISPLAY_OUT STREQUAL "WS281X_RPI")
-    target_link_libraries(ESP32_Render_engine2 PRIVATE /usr/local/lib/libws2811.a)
-
-    include_directories(/usr/local/include)
-    link_directories(/usr/local/lib)
-
-    target_link_libraries(ESP32_Render_engine2 m ws2811)# <=== прямой путь к .a
-endif()
+target_link_libraries(ESP32_Render_engine2 PRIVATE ${extra_libs})
 
 
