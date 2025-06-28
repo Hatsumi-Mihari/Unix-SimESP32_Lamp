@@ -11,9 +11,8 @@ void Device_Init(int countLeds) {
 void Device_Render(FBO *fbo) {
     render(fbo);
 }
-#endif
 
-#ifdef NULL
+#else
 void Device_Init(int countLeds) {
 
 }
