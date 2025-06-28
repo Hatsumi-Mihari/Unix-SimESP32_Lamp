@@ -52,13 +52,13 @@ add_executable(ESP32_Render_engine2 main.c
         Render_Engine/DeviceRender/Rpi/Rpi_WS2811.h
 )
 
-if (DISPLAY_OUT STREQUAL "WS281X_RPI")
+set(EXTRA_LIBS m)
+if(DISPLAY_OUT STREQUAL "WS281X_RPI")
     find_library(WS2811_LIB NAMES ws2811 PATHS /usr/local/lib)
-    target_link_libraries(ESP32_Render_engine2 PRIVATE ${WS2811_LIB})
+    list(APPEND EXTRA_LIBS ${WS2811_LIB})
     list(APPEND SOURCES Render_Engine/DeviceRender/Rpi/Rpi_WS2811.c)
     add_definitions(-DWS281X_RPI)
     include_directories(/usr/local/include)
-    link_directories(/usr/local/lib)
 endif()
 
 target_link_libraries(ESP32_Render_engine2 m)
