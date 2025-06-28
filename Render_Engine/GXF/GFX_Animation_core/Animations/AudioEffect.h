@@ -13,7 +13,7 @@
 
 typedef struct AudioEffect {
     uint8_t *SectrumData;
-    RGB888 color;
+    HSL color;
     uint16_t SectrumSize;
     uint8_t mix;
     FBO *fbo;

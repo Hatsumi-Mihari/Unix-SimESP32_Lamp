@@ -81,7 +81,7 @@ int main(void) {
             .name_device = "CLI_Debug_Test_ESP32_S2"
         },
         .DebugFBO = true,
-        .version = "PC_Unix_ALPHA:0.2.25",
+        .version = "PC_Unix_ALPHA:0.2.5",
         .DebugFullMemoryAllocd = true,
         .DebugTimerQueue = false,
         .DebugDevice = true,
@@ -145,10 +145,10 @@ int main(void) {
         .callback = &drawAudioLightSpectrum,
         .arg = &(AudioEffect){
             .fbo = render_state.fbo,
-            .color = (RGB888){
-                .r = 255,
-                .g = 94,
-                .b = 0,
+            .color = (HSL){
+                .hue = 30,
+                .saturation = 255,
+                .lightness = 255,
             },
             .SectrumData = UDPAudioSock.bufferRX,
             .SectrumSize = 72
