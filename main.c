@@ -146,9 +146,9 @@ int main(void) {
         .arg = &(AudioEffect){
             .fbo = render_state.fbo,
             .color = (RGB888){
-                .r = 0,
-                .g = 255,
-                .b = 154,
+                .r = 255,
+                .g = 94,
+                .b = 0,
             },
             .SectrumData = UDPAudioSock.bufferRX,
             .SectrumSize = 72
