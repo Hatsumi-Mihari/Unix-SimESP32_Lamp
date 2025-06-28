@@ -56,7 +56,7 @@ int main(void) {
 
     RenderState render_state = {
         .fbo = &(FBO){
-            .size = 144
+            .size = 72
         },
         .main_timer_update_usec = 15,
         .enable_bland = true,
